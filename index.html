@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArovelCare – Centralize Health Care Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ffffff;
+            --accent: #1e90ff; /* A general accent, though specific arov-blue/green are preferred */
+            --bg-dark: #f9f9f9;
+            --glass: rgba(0, 0, 0, 0.05);
+            --text-light: #034465; /* Dark blue for primary text */
+            --blur: blur(14px);
+            --arovel-green: #43b77a; /* Specific green from your logo/theme */
+            --arovel-blue: #0072bc; /* Specific blue from your logo/theme */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--primary);
+            color: var(--text-light);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        header {
+            padding: 10px 40px;
+            background: #efefef;
+            backdrop-filter: var(--blur);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid #b2ebf2;
+            height: 80px;
+        }
+
+        .logo {
+            height: 90px;
+            object-fit: contain;
+        }
+
+        nav a {
+            position: relative;
+            margin: 0 12px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            left: 0;
+            bottom: -4px;
+            background-color: var(--arovel-blue); /* Use theme blue */
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--arovel-blue); /* Use theme blue */
+        }
+
+        .sub-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e0f7fa;
+            color: var(--text-light);
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 500;
+            border-bottom: 1px solid #b2ebf2;
+            position: relative;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .sub-header-center {
+            flex: 1;
+            text-align: center;
+        }
+
+        .sub-header-right {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .sub-header {
+                flex-direction: column;
+                position: static;
+            }
+
+            .sub-header-right {
+                position: static;
+                transform: none;
+                margin-top: 4px;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            z-index: 1000;
+        }
+
+        .mobile-nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* This is a dark overlay, not pure black */
+            z-index: 998;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .mobile-nav-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .mobile-nav-overlay ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        .mobile-nav-overlay ul li {
+            margin: 20px 0;
+        }
+
+        .mobile-nav-overlay ul li a {
+            color: white;
+            font-size: 1.8rem;
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-overlay ul li a:hover {
+            color: var(--accent);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .hero {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            max-width: 100vw;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0, 114, 188, 0.8), rgba(67, 183, 122, 0.6)); /* Gradient overlay matching theme */
+            z-index: 1;
+        }
+
+        .hero-content {
+            z-index: 2;
+            text-align: left;
+            padding: 20px 50px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: white;
+            font-weight: 800;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #1e90ff, #38ada9);
+            color: white;
+            box-shadow: 0 0 12px #1e90ff;
+        }
+
+        .btn-primary:hover {
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        section {
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin: auto;
+            position: relative;
+        }
+
+        .about-section {
+            background-color: var(--primary);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .about-section p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin: 0 auto;
+            color: #333;
+            font-weight: 400;
+        }
+
+        .section-divider {
+            width: 60px;
+            height: 4px;
+            background-color: var(--arovel-blue); /* Use theme blue */
+            margin: 10px auto 30px;
+            border: none;
+            border-radius: 2px;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--text-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .stakeholder-benefits {
+            background-color: #e0f7fa;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .stakeholder-benefits h2 {
+            color: var(--text-light);
+            margin-bottom: 50px;
+        }
+
+        .benefit-category {
+            margin-bottom: 60px;
+        }
+
+        .benefit-category h3 {
+            font-size: 2rem;
+            color: var(--arovel-blue);
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .benefit-category h3::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--arovel-green); /* Use theme green */
+            border-radius: 2px;
+        }
+
+        .benefit-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefit-item {
+            background: var(--primary);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            text-align: left;
+            transition: transform 0.2s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefit-item h4 {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .benefit-item p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .contact-section {
+            padding: 100px 20px;
+            background: linear-gradient(to right, #057265, #03598a); /* Use gradient for contact form background */
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: white; /* Changed to white for contrast on dark background */
+            position: relative;
+        }
+
+        .contact-section h2::after {
+            content: "";
+            width: 60px;
+            height: 3px;
+            background: var(--arovel-green); /* Use theme green */
+            display: block;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1); /* Slightly transparent white for glass effect */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px); /* Apply blur for glass effect */
+        }
+
+        .contact-form form input,
+        .contact-form form textarea {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Lighter border for dark background */
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white for input fields */
+            font-size: 1rem;
+            color: #333; /* Dark text for readability */
+        }
+
+        .contact-form form input::placeholder,
+        .contact-form form textarea::placeholder {
+            color: #888;
+        }
+
+        .contact-form form button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            color: #fff;
+            background: linear-gradient(to right, var(--arovel-blue), var(--arovel-green)); /* Gradient button */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .contact-form form button:hover {
+            background: linear-gradient(to right, #0056b3, #308b68); /* Darker gradient on hover */
+        }
+
+        .healthcare-impact {
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 2rem;
+            color: #fff;
+            text-align: center;
+            max-width: 1500px;
+            /* Placeholder for team image, will be replaced by user's actual image if provided */
+            background-image: url('https://placehold.co/1600x900/0072bc/43b77a?text=Healthcare+Revolution+Bangladesh');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .healthcare-impact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Darker versions of theme colors for overlay */
+            background: linear-gradient(to right, rgba(3, 68, 101, 0.7), rgba(67, 183, 122, 0.7));
+            z-index: 1;
+        }
+
+        .impact-overlay {
+            position: relative;
+            z-index: 3;
+            background: transparent;
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: none;
+        }
+
+        .healthcare-impact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .healthcare-impact p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+            color: #e0e0e0;
+        }
+
+        .cta-button {
+            background: linear-gradient(to right, var(--arovel-blue), var(--arovel-green));
+            color: white;
+            box-shadow: 0 0 12px var(--arovel-blue);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .cta-button:hover {
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        .stats-section {
+            background: var(--primary);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .stats-section h2 {
+            font-size: 2.8rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .subtext {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: #555;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-box {
+            background: linear-gradient(to bottom right, #ffffff, #e0f7fa);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-box i {
+            font-size: 3.5rem;
+            color: var(--arovel-green); /* Use theme green for icons */
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-box h3 {
+            font-size: 3rem;
+            margin: 0;
+            color: var(--arovel-blue); /* Use theme blue for numbers */
+            font-weight: 700;
+        }
+
+        .stat-box p {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        footer {
+            background: #f1f1f1;
+            color: #333;
+            padding: 50px 20px;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: space-between;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .footer-column {
+            min-width: 220px;
+        }
+
+        .footer-column h3 {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #333;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-column a:hover {
+            text-decoration: underline;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: var(--arovel-blue); /* Use theme blue for social icons */
+            font-size: 24px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-icons i {
+            position: absolute;
+            font-size: 30px;
+            color: rgba(255, 255, 255, 0.6);
+            animation: floatPulse 6s infinite ease-in-out;
+            animation-delay: calc(var(--i) * 0.5s);
+        }
+
+        .floating-icons i:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            --i: 0;
+        }
+
+        .floating-icons i:nth-child(2) {
+            top: 20%;
+            left: 70%;
+            --i: 1;
+        }
+
+        .floating-icons i:nth-child(3) {
+            top: 35%;
+            left: 10%;
+            --i: 2;
+        }
+
+        .floating-icons i:nth-child(4) {
+            top: 50%;
+            left: 60%;
+            --i: 3;
+        }
+
+        .floating-icons i:nth-child(5) {
+            top: 65%;
+            left: 30%;
+            --i: 4;
+        }
+
+        .floating-icons i:nth-child(6) {
+            top: 15%;
+            left: 80%;
+            --i: 5;
+        }
+
+        .floating-icons i:nth-child(7) {
+            top: 40%;
+            left: 45%;
+            --i: 6;
+        }
+
+        .floating-icons i:nth-child(8) {
+            top: 70%;
+            left: 75%;
+            --i: 7;
+        }
+
+        .floating-icons i:nth-child(9) {
+            top: 80%;
+            left: 10%;
+            --i: 8;
+        }
+
+        .floating-icons i:nth-child(10) {
+            top: 25%;
+            left: 50%;
+            --i: 9;
+        }
+
+        .floating-icons i:nth-child(11) {
+            top: 40%;
+            left: 85%;
+            --i: 10;
+        }
+
+        .floating-icons i:nth-child(12) {
+            top: 80%;
+            left: 85%;
+            --i: 11;
+        }
+
+        .floating-icons i:nth-child(13) {
+            top: 80%;
+            left: 50%;
+            --i: 12;
+        }
+
+        .floating-icons i:nth-child(14) {
+            top: 50%;
+            left: 20%;
+            --i: 13;
+        }
+
+        @keyframes floatPulse {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            40% {
+                transform: translateY(-15px) scale(1.05);
+                opacity: 1;
+            }
+
+            60% {
+                opacity: 0;
+                transform: translateY(-15px) scale(1.05);
+            }
+
+            80% {
+                opacity: 0;
+                transform: translateY(10px) scale(1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        #loader {
+            position: fixed;
+            z-index: 10000;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            background: transparent;
+            transition: opacity 0.5s ease;
+        }
+
+        .heartbeat-icon {
+            color: #013d3e;
+            font-size: 100px;
+            animation: heartbeat 1.2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            14% {
+                transform: scale(1.3);
+            }
+
+            28% {
+                transform: scale(1);
+            }
+
+            42% {
+                transform: scale(1.3);
+            }
+
+            70% {
+                transform: scale(1);
+            }
+        }
+
+        /* --- Media Queries for Responsiveness --- */
+
+        @media (max-width: 1024px) {
+            header {
+                padding: 10px 20px;
+                height: auto;
+                flex-wrap: wrap;
+            }
+
+            .logo {
+                height: 70px;
+            }
+
+            nav {
+                margin-top: 10px;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav a {
+                margin: 0 10px;
+            }
+
+            .hero-content {
+                padding-left: 30px;
+                padding-right: 30px;
+                align-items: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            section {
+                padding: 50px 20px;
+            }
+
+            .about-section {
+                padding: 60px 20px;
+            }
+
+            .about-section h2 {
+                font-size: 2rem;
+            }
+
+            .about-section p {
+                font-size: 1.1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .healthcare-impact {
+                padding: 4rem 1.5rem;
+            }
+
+            .impact-overlay {
+                padding: 2rem;
+            }
+
+            .healthcare-impact h2 {
+                font-size: 2rem;
+            }
+
+            .healthcare-impact p {
+                font-size: 1rem;
+            }
+
+            .stats-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .stats-section h2 {
+                font-size: 2.2rem;
+            }
+
+            .subtext {
+                font-size: 1.1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+            }
+
+            .stat-box h3 {
+                font-size: 2.5rem;
+            }
+
+            .stat-box p {
+                font-size: 1.1rem;
+            }
+
+            .contact-section {
+                padding: 80px 20px;
+            }
+
+            .contact-section h2 {
+                font-size: 2.5rem;
+            }
+
+            .contact-form {
+                padding: 30px;
+            }
+
+            .footer-container {
+                gap: 20px;
+            }
+
+            .footer-column {
+                min-width: 180px;
+                text-align: left;
+            }
+
+            .benefit-category h3 {
+                font-size: 1.8rem;
+            }
+
+            .benefit-list {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 767px) {
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+                height: 80px;
+                padding: 10px 15px;
+            }
+
+            .logo {
+                height: 60px;
+                margin-bottom: 0;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                height: auto;
+                min-height: 80vh;
+            }
+
+            .hero-content {
+                padding: 20px;
+                text-align: center;
+                align-items: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+                margin: 8px 5px;
+            }
+
+            section {
+                padding: 40px 15px;
+            }
+
+            .about-section {
+                padding: 50px 15px;
+            }
+
+            .about-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .about-section p {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                padding: 20px;
+            }
+
+            .healthcare-impact {
+                padding: 3rem 1rem;
+            }
+
+            .impact-overlay {
+                padding: 1.5rem;
+            }
+
+            .healthcare-impact h2 {
+                font-size: 1.8rem;
+            }
+
+            .healthcare-impact p {
+                font-size: 0.95rem;
+            }
+
+            .stats-section {
+                padding: 3rem 1rem;
+            }
+
+            .stats-section h2 {
+                font-size: 2rem;
+            }
+
+            .subtext {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stat-box {
+                padding: 2rem 1.5rem;
+            }
+
+            .stat-box h3 {
+                font-size: 2rem;
+            }
+
+            .stat-box p {
+                font-size: 1rem;
+            }
+
+            .contact-section {
+                padding: 60px 15px;
+            }
+
+            .contact-section h2 {
+                font-size: 2rem;
+            }
+
+            .contact-form {
+                padding: 20px;
+            }
+
+            .contact-form form input,
+            .contact-form form textarea,
+            .contact-form form button {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 25px;
+                text-align: center;
+            }
+
+            .footer-column {
+                min-width: unset;
+                width: 100%;
+            }
+
+            .footer-column img {
+                margin: 0 auto;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .floating-icons i {
+                font-size: 20px;
+            }
+
+            .floating-icons i:nth-child(1) {
+                top: 5%;
+                left: 15%;
+            }
+
+            .floating-icons i:nth-child(2) {
+                top: 15%;
+                left: 80%;
+            }
+
+            .floating-icons i:nth-child(3) {
+                top: 25%;
+                left: 5%;
+            }
+
+            .floating-icons i:nth-child(4) {
+                top: 35%;
+                left: 70%;
+            }
+
+            .floating-icons i:nth-child(5) {
+                top: 45%;
+                left: 20%;
+            }
+
+            .floating-icons i:nth-child(6) {
+                top: 55%;
+                left: 85%;
+            }
+
+            .floating-icons i:nth-child(7) {
+                top: 65%;
+                left: 30%;
+            }
+
+            .floating-icons i:nth-child(8) {
+                top: 75%;
+                left: 60%;
+            }
+
+            .floating-icons i:nth-child(9) {
+                top: 85%;
+                left: 10%;
+            }
+
+            .floating-icons i:nth-child(10) {
+                top: 90%;
+                left: 50%;
+            }
+
+            .floating-icons i:nth-child(11) {
+                top: 20%;
+                left: 40%;
+            }
+
+            .floating-icons i:nth-child(12) {
+                top: 70%;
+                left: 45%;
+            }
+
+            .floating-icons i:nth-child(13) {
+                top: 30%;
+                left: 90%;
+            }
+
+            .floating-icons i:nth-child(14) {
+                top: 50%;
+                left: 5%;
+            }
+
+            .benefit-category h3 {
+                font-size: 1.6rem;
+            }
+            .benefit-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Video Section Specific Styles */
+        .video-section {
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: auto;
+            text-align: center;
+            background-color: #f0f8ff; /* Light blue background for contrast */
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .video-section h2 {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .video-section p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            line-height: 1.6;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* New styles for Health Landscape Infographics */
+        .health-landscape-section {
+            background-color: var(--primary);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .health-landscape-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .health-landscape-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .health-info-card {
+            background: linear-gradient(to bottom right, #ffffff, #f0f8ff);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .health-info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .health-info-card .icon {
+            font-size: 3.5rem;
+            color: var(--arovel-green);
+            margin-bottom: 15px;
+        }
+
+        .health-info-card .value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--arovel-blue);
+            margin-bottom: 10px;
+        }
+
+        .health-info-card .label {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        /* Responsive adjustments for new section */
+        @media (max-width: 1024px) {
+            .health-landscape-section {
+                padding: 60px 20px;
+            }
+            .health-landscape-section h2 {
+                font-size: 2rem;
+            }
+            .health-landscape-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            .health-info-card .icon {
+                font-size: 3rem;
+            }
+            .health-info-card .value {
+                font-size: 2.5rem;
+            }
+            .health-info-card .label {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .health-landscape-section {
+                padding: 50px 15px;
+            }
+            .health-landscape-section h2 {
+                font-size: 1.8rem;
+            }
+            .health-landscape-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .health-info-card {
+                padding: 25px;
+            }
+            .health-info-card .icon {
+                font-size: 2.5rem;
+            }
+            .health-info-card .value {
+                font-size: 2rem;
+            }
+            .health-info-card .label {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="0">
+    <div id="loader" style="transition: opacity 0.5s; opacity: 0; display: none;">
+        <i class="fas fa-heartbeat heartbeat-icon"></i>
+    </div>
+    <div class="sub-header">
+        <div class="sub-header-center">
+            <p>Welcome to ArovelCare — Your trusted partner in centralized healthcare solutions!</p>
+        </div>
+        <div class="sub-header-right">
+            <p>Your care is our priority — available 24/366</p>
+        </div>
+    </div>
+
+    <header>
+        <a href="#">
+            <!-- Logo source updated to use the latest provided image -->
+            <img src="arovel_logo.png" alt="ArovelCare Logo" class="logo">
+        </a>
+        <nav id="main-nav">
+            <a href="#about">About Us</a>
+            <a href="#">Career</a>
+            <a href="#features">Features</a>
+            <a href="#benefits">Benefits</a>
+            <a href="#" class="btn btn-secondary" style="padding: 6px 12px; font-size: 1rem;">Login</a>
+        </nav>
+        <div class="menu-toggle" id="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+        <i class="fas fa-times close-btn" id="close-mobile-menu"></i>
+        <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#">Career</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#benefits">Benefits</a></li>
+            <li><a href="#" class="btn btn-secondary" style="padding: 10px 20px; font-size: 1.2rem; display: inline-block;">Login</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <section class="hero aos-init aos-animate" style="background-image: url('https://placehold.co/1600x900/0072bc/43b77a?text=ArovelCare+Healthcare+Solution');" data-aos="fade-in">
+            <div class="hero-content">
+                <h1 data-aos="zoom-in" class="aos-init aos-animate">
+                    Igniting a Healthcare Revolution in Bangladesh: ArovelCare Leads the Way
+                </h1>
+                <p data-aos="fade-up" class="aos-init aos-animate">
+                    ArovelCare is not just a platform; it's the dawn of a new era for healthcare in Bangladesh. We are meticulously addressing the nation's critical challenges – from fragmented systems and uneven access to the shortage of dedicated professionals – by unifying all stakeholders under a single, intelligent digital umbrella. This is more than technology; it's a commitment to a healthier, more equitable future for every citizen.
+                </p>
+                <div>
+                    <button class="btn btn-primary">Discover Our Solution</button>
+                    <button class="btn btn-secondary">Explore Health ID</button>
+                </div>
+                <p data-aos="fade-up" class="aos-init aos-animate">
+                    Your care is our priority — available 24/366
+                </p>
+            </div>
+        </section>
+
+        <section id="about" class="about-section aos-init" data-aos="zoom-in">
+            <div class="about-content">
+                <h2>About ArovelCare: Bridging the Healthcare Gap in Bangladesh</h2>
+                <p>
+                    Bangladesh, with its vibrant population of over 170 million, faces significant healthcare challenges. Uneven access, limited infrastructure, a shortage of dedicated health professionals, and fragmented data across public and private sectors create a complex landscape. ArovelCare emerges as the essential centralized digital healthcare system designed to address these issues holistically, transforming challenges into opportunities for a healthier nation.
+                </p>
+                <p>
+                    Our mission is to unite 180 million Bangladeshis under a single, comprehensive healthcare system, each with a unique Health ID. We are committed to ensuring that quality care reaches every citizen, from bustling urban centers to the most remote rural villages. ArovelCare empowers healthcare providers with a unified platform for Electronic Health Records (EHRs), virtual consultations, real-time analytics, and more, streamlining workflows and enhancing patient engagement through advanced encryption and AI-driven insights.
+                </p>
+                <hr class="section-divider">
+            </div>
+        </section>
+
+        <!-- Video Section -->
+        <section id="video-showcase" class="video-section aos-init" data-aos="fade-up">
+            <h2>Witness the Future of Healthcare Facilities</h2>
+            <p>
+                Experience a glimpse into the modernized healthcare infrastructure and seamless patient journeys enabled by ArovelCare's centralized solution. This video showcases our commitment to accessible and efficient care across Bangladesh.
+            </p>
+            <div class="video-container">
+                <!-- Video source updated to use the provided video file -->
+                <video controls autoplay loop muted playsinline>
+                    <source src="health_facility_video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+        <!-- End Video Section -->
+
+        <!-- Section: Bangladesh's Health Landscape: Key Insights (Infographics) -->
+        <section id="health-landscape" class="health-landscape-section aos-init" data-aos="fade-up">
+            <h2>Bangladesh's Health Landscape: Key Insights</h2>
+            <p class="subtext">Understanding the challenges that drive our mission for a healthier nation.</p>
+            <div class="health-landscape-grid">
+                <div class="health-info-card aos-init" data-aos="zoom-in">
+                    <i class="fas fa-chart-pie icon"></i>
+                    <div class="value">0.74%</div>
+                    <div class="label">GDP to Healthcare <br>(Critically low investment)</div>
+                </div>
+                <div class="health-info-card aos-init" data-aos="zoom-in" data-aos-delay="100">
+                    <i class="fas fa-wallet icon"></i>
+                    <div class="value">67%</div>
+                    <div class="label">Out-of-Pocket Expenses <br>(Driving families into poverty)</div>
+                </div>
+                <div class="health-info-card aos-init" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-user-md icon"></i>
+                    <div class="value">3.05</div>
+                    <div class="label">Doctors per 10,000 Population <br>(Far below WHO recommendation)</div>
+                </div>
+                <div class="health-info-card aos-init" data-aos="zoom-in" data-aos-delay="300">
+                    <i class="fas fa-house-user icon"></i>
+                    <div class="value">70%</div>
+                    <div class="label">Rural Population <br>(Limited access to quality care)</div>
+                </div>
+                <div class="health-info-card aos-init" data-aos="zoom-in" data-aos-delay="400">
+                    <i class="fas fa-user-nurse icon"></i>
+                    <div class="value">1:1,847</div>
+                    <div class="label">Nurse-Patient Ratio <br>(Critical shortage of nursing staff)</div>
+                </div>
+            </div>
+            <hr class="section-divider">
+        </section>
+        <!-- End New Section -->
+
+        <section id="features" data-aos="fade-up" class="aos-init">
+            <h2>Core Features of Our Centralized Platform</h2>
+            <div class="features-grid">
+                <div class="feature-card aos-init" data-aos="flip-left">
+                    <h3>Unified Electronic Health Records (EHR)</h3>
+                    <p>Centralize all patient data for seamless, secure access by authorized providers nationwide, reducing duplicate tests and ensuring care continuity.</p>
+                </div>
+                <div class="feature-card aos-init" data-aos="flip-right">
+                    <h3>Integrated Telemedicine Hubs</h3>
+                    <p>Connect rural patients with urban specialists via secure video consultations, lowering travel costs and bridging the specialist gap in underserved regions.</p>
+                </div>
+                <div class="feature-card aos-init" data-aos="flip-left">
+                    <h3>Real-Time Disease Surveillance</h3>
+                    <p>Monitor outbreaks like dengue or cholera using AI-powered analytics, enabling rapid containment and efficient resource allocation during epidemics.</p>
+                </div>
+                <div class="feature-card aos-init" data-aos="flip-right">
+                    <h3>Digital Immunization Tracking</h3>
+                    <p>Track vaccinations via mobile apps with automated SMS reminders for parents, significantly boosting immunization coverage and reducing preventable diseases.</p>
+                </div>
+                <div class="feature-card aos-init" data-aos="flip-left">
+                    <h3>Smart Supply Chain Management</h3>
+                    <p>Track medicine and vaccine stocks via IoT sensors to prevent shortages, reduce waste, and ensure timely delivery to even the most remote facilities.</p>
+                </div>
+                <div class="feature-card aos-init" data-aos="flip-right">
+                    <h3>AI-Powered Insights & Recommendations</h3>
+                    <p>Leverage intelligent care suggestions based on patient history and patterns, improving diagnoses, predicting outbreaks, and optimizing resource allocation.</p>
+                </div>
+                <div class="feature-card aos-init" data-aos="flip-left">
+                    <h3>Multilingual Patient & Provider Interface</h3>
+                    <p>Offer comprehensive support in both Bengali and English, ensuring accessibility and ease of use for all citizens and healthcare professionals.</p>
+                </div>
+                <div class="feature-card aos-init" data-aos="flip-right">
+                    <h3>Fraud Detection & Compliance Tools</h3>
+                    <p>Implement robust systems to prevent medical fraud, ensure tax compliance, and provide audit trails, saving public funds and improving trust.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="stakeholder-benefits aos-init" data-aos="fade-up">
+            <h2>Benefits for Every Stakeholder</h2>
+            <p class="subtext">ArovelCare is designed to uplift the entire healthcare ecosystem in Bangladesh.</p>
+
+            <div class="benefit-category">
+                <h3>For Patients</h3>
+                <div class="benefit-list">
+                    <div class="benefit-item">
+                        <h4>Complete Health Record Access</h4>
+                        <p>Patients gain secure access to their full medical history, empowering them to participate actively in their care decisions.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>Reduced Redundancy & Errors</h4>
+                        <p>Eliminates unnecessary repeat tests and procedures, saving time and money, and minimizing risks from fragmented information.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>Seamless Continuity of Care</h4>
+                        <p>Ensures consistent, high-quality care regardless of location or provider, making transitions smoother and more effective.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="benefit-category">
+                <h3>For Doctors & Healthcare Providers</h3>
+                <div class="benefit-list">
+                    <div class="benefit-item">
+                        <h4>Informed Decision-Making</h4>
+                        <p>Access to comprehensive patient histories enables more accurate diagnoses and treatment plans, especially for complex cases.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>Streamlined Workflows</h4>
+                        <p>Reduces paperwork and administrative burdens, allowing doctors to focus more on patient care and less on manual tasks.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>Enhanced Collaboration</h4>
+                        <p>Facilitates secure and efficient communication with specialists and other providers, leading to better coordinated patient outcomes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="benefit-category">
+                <h3>For Pharmacies, Labs & Diagnostic Centers</h3>
+                <div class="benefit-list">
+                    <div class="benefit-item">
+                        <h4>Direct Digital Prescriptions</h4>
+                        <p>Prescriptions are sent directly from doctors, increasing accuracy, reducing errors, and streamlining dispensing processes.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>Efficient Inventory & Sales</h4>
+                        <p>Integrated tools for inventory management, barcode scanning, and real-time sales tracking optimize operations and reduce waste.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>Legal Protection & Compliance</h4>
+                        <p>All transactions are legally backed by the system, ensuring accountability and preventing issues like self-medication misuse.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="benefit-category">
+                <h3>For the Government & Public Health</h3>
+                <div class="benefit-list">
+                    <div class="benefit-item">
+                        <h4>Real-Time Public Health Monitoring</h4>
+                        <p>Enables immediate surveillance of disease outbreaks and provides critical insights for targeted public health interventions.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>Improved Resource Allocation</h4>
+                        <p>Data-driven insights inform healthcare budgeting and infrastructure planning, ensuring equitable access across the nation.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>Enhanced Transparency & Accountability</h4>
+                        <p>Full record-keeping of facilities and professionals, coupled with automated processes, reduces bureaucracy and fosters trust.</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="section-divider">
+        </section>
+
+        <section class="healthcare-impact aos-init" data-aos="fade-up">
+            <div class="impact-overlay">
+                <h2 data-aos="zoom-in" data-aos-delay="200" class="aos-init">Healthcare That Cares: Our Vision for Bangladesh</h2>
+                <p data-aos="fade-up" data-aos-delay="400" class="aos-init">
+                    At ArovelCare, we’re more than a platform — we’re a commitment to compassionate care, community, and innovation tailored for Bangladesh. Our vision is to integrate user-friendly, cutting-edge healthcare technology to ensure Bangladesh is ready to accept any healthcare challenge by 2031, opening doors for international healthcare collaborations.
+                </p>
+                <p data-aos="fade-up" data-aos-delay="500" class="aos-init">
+                    Whether you're a doctor, a nurse, a pharmacist, or a patient — we’re here to support your journey with secure technology, localized support, and unwavering respect for care, ensuring healthcare for all.
+                </p>
+                <button class="btn btn-primary">Join the Mission</button>
+            </div>
+            <div class="floating-icons">
+                <i class="fas fa-heartbeat"></i>
+                <i class="fas fa-stethoscope"></i>
+                <i class="fas fa-user-md"></i>
+                <i class="fas fa-syringe"></i>
+                <i class="fas fa-notes-medical"></i>
+                <i class="fas fa-briefcase-medical"></i>
+                <i class="fas fa-pills"></i>
+                <i class="fas fa-x-ray"></i>
+                <i class="fas fa-hospital-user"></i>
+                <i class="fas fa-procedures"></i>
+                <i class="fas fa-ambulance"></i>
+                <i class="fas fa-dna"></i>
+                <i class="fas fa-hospital"></i>
+                <i class="fas fa-microscope"></i>
+            </div>
+        </section>
+
+        <section id="stats-impact" class="stats-section aos-init" data-aos="fade-up">
+            <div class="container">
+                <h2>Our Growing Reach in Healthcare</h2>
+                <p class="subtext">Empowering healthcare across Bangladesh with our expanding infrastructure and dedicated professionals.</p>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <i class="fas fa-user-md"></i>
+                        <h3 class="counter" data-count="1200" data-suffix="+">0</h3>
+                        <p>Doctors</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <i class="fas fa-user-nurse"></i>
+                        <h3 class="counter" data-count="850" data-suffix="+">0</h3>
+                        <p>Nurses</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <i class="fas fa-hospital"></i>
+                        <h3 class="counter" data-count="300" data-suffix="+">0</h3>
+                        <p>Hospitals</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <i class="fas fa-flask"></i>
+                        <h3 class="counter" data-count="180" data-suffix="+">0</h3>
+                        <p>Labs</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <i class="fas fa-pills"></i>
+                        <h3 class="counter" data-count="420" data-suffix="+">0</h3>
+                        <p>Pharmacies</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <i class="fas fa-ambulance"></i>
+                        <h3 class="counter" data-count="95" data-suffix="+">0</h3>
+                        <p>Ambulances</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" data-aos="zoom-in-up" class="aos-init">
+            <h2>Ready to Elevate Your Healthcare Workflow?</h2>
+            <p style="text-align:center;">Let us show you how ArovelCare can modernize your operations and contribute to a healthier Bangladesh.</p>
+            <div style="text-align:center;">
+                <button class="btn btn-secondary">Book a Demo</button>
+                <button class="btn btn-primary">Contact Sales</button>
+            </div>
+            <hr class="section-divider">
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h2>Get in Touch</h2>
+            <div class="contact-form">
+                <form action="#" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required="">
+                    <input type="email" name="email" placeholder="Your Email" required="">
+                    <input type="text" name="subject" placeholder="Subject" required="">
+                    <textarea name="message" rows="5" placeholder="Your Message" required=""></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <a href="#">
+                    <!-- Logo source updated to use the latest provided image -->
+                    <img src="arovel_logo.png" alt="ArovelCare Logo" class="logo">
+                </a>
+                <p>Centralizing healthcare through smart, connected solutions.</p>
+                <p>At ArovelCare, we strive to empower healthcare professionals</p>
+                <p>with cutting-edge tools...</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="#about">About Us</a>
+                <a href="#features">Features</a>
+                <a href="#benefits">Benefits</a>
+                <a href="#contact">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <p>Email: info@arovelcare.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2025 ArovelCare. All rights reserved.</div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: false
+        });
+        window.addEventListener("load", function() {
+            const loader = document.getElementById("loader");
+            setTimeout(() => {
+                loader.style.transition = "opacity 0.5s ease";
+                loader.style.opacity = "0";
+                setTimeout(() => loader.style.display = "none", 500);
+            }, 500);
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const counters = document.querySelectorAll('.counter');
+            const options = {
+                threshold: 0.5
+            };
+
+            const animateCounter = (entry) => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = +counter.getAttribute('data-count');
+                    const suffix = counter.getAttribute('data-suffix') || '';
+                    counter.innerText = '0';
+
+                    const updateCount = () => {
+                        const count = +counter.innerText.replace(/\D/g, '');
+                        const increment = Math.ceil(target / 200);
+
+                        if (count < target) {
+                            counter.innerText = count + increment;
+                            setTimeout(updateCount, 15);
+                        } else {
+                            counter.innerText = target + suffix;
+                        }
+                    };
+
+                    updateCount();
+                }
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(animateCounter);
+            }, options);
+
+            counters.forEach(counter => observer.observe(counter));
+
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+            const closeMobileMenu = document.getElementById('close-mobile-menu');
+
+            if (mobileMenuToggle && mobileNavOverlay && closeMobileMenu) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileNavOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+
+                closeMobileMenu.addEventListener('click', () => {
+                    mobileNavOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+
+                mobileNavOverlay.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileNavOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
