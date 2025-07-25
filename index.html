@@ -43,14 +43,112 @@
             backdrop-filter: var(--blur);
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: space-between; /* Distribute items */
+            align-items: center; /* Vertically align items */
             position: sticky;
             top: 0;
             z-index: 999;
             border-bottom: 1px solid #b2ebf2;
-            height: 80px;
+            min-height: 80px;
+            flex-wrap: nowrap; /* Prevent wrapping on desktop, handle with media query */
         }
+
+        .header-main-content {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: space-between; /* Distribute logo, text, nav */
+        }
+
+        .header-left {
+            flex-shrink: 0;
+        }
+
+        .header-center-text {
+            flex-grow: 1; /* Allows it to take up space */
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+            padding: 0 15px;
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 250px; /* Ensure it doesn't shrink too much */
+        }
+
+        .header-center-text p {
+            margin: 0; /* Remove default paragraph margins */
+            padding: 2px 0;
+        }
+
+        .header-center-text .health-icon {
+            font-size: 1.5em; /* Size of the icon */
+            color: var(--arovel-green); /* Match theme green */
+            margin-bottom: 5px; /* Space between icon and text */
+            animation: pulse-icon 2s infinite ease-in-out; /* Subtle animation */
+        }
+
+        @keyframes pulse-icon {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        .header-right {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 1024px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 20px;
+            }
+            .header-main-content {
+                flex-direction: column;
+                width: 100%;
+            }
+            .header-left {
+                width: 100%;
+                justify-content: center; /* Center logo on smaller screens */
+                margin-bottom: 10px;
+            }
+            .header-center-text {
+                order: 3; /* Move below logo and nav on smaller screens */
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+                padding: 10px 0;
+            }
+            .header-right {
+                order: 2; /* Place nav after logo on smaller screens */
+                width: 100%;
+                justify-content: center; /* Center nav on smaller screens */
+                margin-bottom: 10px;
+            }
+            nav {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 767px) {
+            header {
+                padding: 10px 15px;
+            }
+            .header-left, .header-right {
+                margin-bottom: 5px;
+            }
+            .header-center-text {
+                font-size: 0.8em;
+                padding: 0 10px;
+            }
+        }
+
 
         .logo {
             height: 90px;
@@ -83,47 +181,6 @@
 
         nav a:hover {
             color: var(--arovel-blue); /* Use theme blue */
-        }
-
-        .sub-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #e0f7fa;
-            color: var(--text-light);
-            padding: 4px 10px;
-            font-size: 12px;
-            font-weight: 500;
-            border-bottom: 1px solid #b2ebf2;
-            position: relative;
-            flex-wrap: wrap;
-            text-align: center;
-        }
-
-        .sub-header-center {
-            flex: 1;
-            text-align: center;
-        }
-
-        .sub-header-right {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            white-space: nowrap;
-        }
-
-        @media (max-width: 768px) {
-            .sub-header {
-                flex-direction: column;
-                position: static;
-            }
-
-            .sub-header-right {
-                position: static;
-                transform: none;
-                margin-top: 4px;
-            }
         }
 
         .menu-toggle {
@@ -197,6 +254,8 @@
             overflow: hidden;
             background-size: cover;
             background-position: center;
+            /* Using a more professional, generic healthcare image */
+            background-image: url('https://images.unsplash.com/photo-1588776814546-ec7b60b4f7b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
         }
 
         .hero::before {
@@ -219,17 +278,18 @@
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3); /* Add text shadow for readability */
         }
 
         .hero-content h1 {
-            font-size: 3rem;
+            font-size: 3.5rem; /* Slightly larger for impact */
             margin-bottom: 20px;
             color: white;
             font-weight: 800;
         }
 
         .hero-content p {
-            font-size: 1.2rem;
+            font-size: 1.3rem; /* Slightly larger for readability */
             margin-bottom: 30px;
             color: #e0e0e0;
         }
@@ -265,6 +325,54 @@
             color: white;
         }
 
+        /* Hero SVG Infographics */
+        .hero-svg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Below text, above background */
+            pointer-events: none; /* Allow clicks to pass through */
+        }
+
+        .hero-svg-overlay svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible; /* Allow elements to extend beyond SVG bounds */
+        }
+
+        .hero-svg-overlay .st0 { fill: none; stroke: #b2ebf2; stroke-width: 2; stroke-miterlimit: 10; opacity: 0.6; }
+        .hero-svg-overlay .st1 { fill: #b2ebf2; opacity: 0.8; }
+        .hero-svg-overlay .st2 { fill: #43b77a; opacity: 0.9; } /* Green for data points */
+        .hero-svg-overlay .st3 { fill: #0072bc; opacity: 0.9; } /* Blue for connections */
+
+        /* Animation for SVG elements */
+        .path-animate {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 5s linear forwards infinite;
+            animation-delay: var(--delay);
+        }
+
+        .circle-animate {
+            animation: fade-in-scale 3s ease-out forwards infinite;
+            animation-delay: var(--delay);
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes fade-in-scale {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.2); }
+        }
+
+
         section {
             padding: 60px 40px;
             max-width: 1400px;
@@ -276,6 +384,16 @@
             background-color: var(--primary);
             padding: 80px 20px;
             text-align: center;
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center horizontally */
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1000px;
         }
 
         .about-section h2 {
@@ -289,9 +407,55 @@
             font-size: 1.25rem;
             line-height: 1.8;
             max-width: 1000px;
-            margin: 0 auto;
+            margin: 0 auto 20px auto; /* Add bottom margin for separation */
             color: #333;
             font-weight: 400;
+        }
+
+        .about-visual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .about-visual-card {
+            background: linear-gradient(to bottom right, #ffffff, #f0f8ff);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px; /* Ensure cards have a minimum height */
+        }
+
+        .about-visual-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-visual-card .icon {
+            font-size: 3.5rem;
+            color: var(--arovel-green);
+            margin-bottom: 15px;
+        }
+
+        .about-visual-card h4 {
+            font-size: 1.5rem;
+            color: var(--arovel-blue);
+            margin-bottom: 10px;
+        }
+
+        .about-visual-card p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+            margin: 0; /* Override default p margin */
         }
 
         .section-divider {
@@ -1349,6 +1513,82 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* About Section GIS Integration */
+        .about-gis-integration {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #f8fcfd; /* Very light blue background */
+            border-radius: 20px;
+            margin-top: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .about-gis-integration h3 {
+            font-size: 2rem;
+            color: var(--arovel-blue);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .about-gis-integration p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #444;
+            max-width: 900px;
+            margin-bottom: 30px;
+        }
+
+        .gis-visual-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 400px; /* Fixed height for the visual */
+            background-color: #e0f7fa; /* Light background for the map */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .gis-visual-container svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: visible;
+        }
+
+        .gis-visual-container .map-bg { fill: #c8e6c9; } /* Light green map background */
+        .gis-visual-container .city-dots { fill: var(--arovel-blue); opacity: 0.8; }
+        .gis-visual-container .rural-dots { fill: var(--arovel-green); opacity: 0.8; }
+        .gis-visual-container .data-flow-path { fill: none; stroke: #b3e0ff; stroke-width: 3; stroke-dasharray: 10 5; animation: dash-flow 5s linear infinite; }
+        .gis-visual-container .alert-pulse { fill: red; animation: pulse-alert 1.5s infinite; }
+        .gis-visual-container .hospital-icon { fill: white; font-family: 'Font Awesome 6 Free'; font-size: 20px; text-anchor: middle; dominant-baseline: central; }
+        .gis-visual-container .ambulance-icon { fill: white; font-family: 'Font Awesome 6 Free'; font-size: 18px; text-anchor: middle; dominant-baseline: central; }
+
+        @keyframes dash-flow {
+            to { stroke-dashoffset: -100; }
+        }
+
+        @keyframes pulse-alert {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.7; }
+        }
+
+        @media (max-width: 767px) {
+            .gis-visual-container {
+                height: 300px; /* Adjust height for mobile */
+            }
+            .gis-visual-container .hospital-icon { font-size: 16px; }
+            .gis-visual-container .ambulance-icon { font-size: 14px; }
+        }
+
     </style>
 </head>
 
@@ -1356,29 +1596,32 @@
     <div id="loader" style="transition: opacity 0.5s; opacity: 0; display: none;">
         <i class="fas fa-heartbeat heartbeat-icon"></i>
     </div>
-    <div class="sub-header">
-        <div class="sub-header-center">
-            <p>Welcome to ArovelCare — Your trusted partner in centralized healthcare solutions!</p>
-        </div>
-        <div class="sub-header-right">
-            <p>Your care is our priority — available 24/366</p>
-        </div>
-    </div>
-
+    
     <header>
-        <a href="#">
-            <!-- Logo source updated to use the latest provided image -->
-            <img src="arovel_logo.png" alt="ArovelCare Logo" class="logo">
-        </a>
-        <nav id="main-nav">
-            <a href="#about">About Us</a>
-            <a href="#">Career</a>
-            <a href="#features">Features</a>
-            <a href="#benefits">Benefits</a>
-            <a href="#" class="btn btn-secondary" style="padding: 6px 12px; font-size: 1rem;">Login</a>
-        </nav>
-        <div class="menu-toggle" id="mobile-menu-toggle">
-            <i class="fas fa-bars"></i>
+        <div class="header-main-content">
+            <div class="header-left">
+                <a href="#">
+                    <!-- Logo source updated to use the latest provided image -->
+                    <img src="arovel_logo.png" alt="ArovelCare Logo" class="logo">
+                </a>
+            </div>
+            <div class="header-center-text">
+                <i class="fas fa-hand-holding-heart health-icon"></i> <!-- Health-related icon -->
+                <p>Welcome to ArovelCare — Your trusted partner in centralized healthcare solutions!</p>
+                <p>Your care is our priority — available 24/366</p>
+            </div>
+            <div class="header-right">
+                <nav id="main-nav">
+                    <a href="#about">About Us</a>
+                    <a href="#">Career</a>
+                    <a href="#features">Features</a>
+                    <a href="#benefits">Benefits</a>
+                    <a href="#" class="btn btn-secondary" style="padding: 6px 12px; font-size: 1rem;">Login</a>
+                </nav>
+                <div class="menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -1394,7 +1637,7 @@
     </div>
 
     <div class="container">
-        <section class="hero aos-init aos-animate" style="background-image: url('https://placehold.co/1600x900/0072bc/43b77a?text=ArovelCare+Healthcare+Solution');" data-aos="fade-in">
+        <section class="hero aos-init aos-animate" style="background-image: url('https://images.unsplash.com/photo-1588776814546-ec7b60b4f7b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');" data-aos="fade-in">
             <div class="hero-content">
                 <h1 data-aos="zoom-in" class="aos-init aos-animate">
                     Igniting a Healthcare Revolution in Bangladesh: ArovelCare Leads the Way
@@ -1410,6 +1653,47 @@
                     Your care is our priority — available 24/366
                 </p>
             </div>
+            <!-- SVG Infographic Overlay -->
+            <div class="hero-svg-overlay">
+                <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+                    <!-- GIS Map-like elements -->
+                    <circle class="st0 circle-animate" cx="150" cy="150" r="10" style="--delay: 0s;"></circle>
+                    <circle class="st0 circle-animate" cx="300" cy="200" r="12" style="--delay: 0.2s;"></circle>
+                    <circle class="st0 circle-animate" cx="450" cy="100" r="11" style="--delay: 0.4s;"></circle>
+                    <circle class="st0 circle-animate" cx="600" cy="250" r="13" style="--delay: 0.6s;"></circle>
+                    <circle class="st0 circle-animate" cx="750" cy="180" r="10" style="--delay: 0.8s;"></circle>
+                    <circle class="st0 circle-animate" cx="900" cy="300" r="14" style="--delay: 1s;"></circle>
+
+                    <!-- Animated paths connecting points (representing data flow/connectivity) -->
+                    <path class="st0 path-animate" d="M150,150 Q225,50 300,200 Q375,350 450,100 Q525,-50 600,250 Q675,400 750,180 Q825,100 900,300" style="--delay: 1.2s;"></path>
+                    <path class="st0 path-animate" d="M100,450 C200,550 300,400 400,500 S600,600 700,500 S800,400 900,500" style="--delay: 1.5s;"></path>
+
+                    <!-- Central pulsing health icon -->
+                    <g class="health-pulse-icon">
+                        <circle class="st2 circle-animate" cx="500" cy="300" r="25" style="--delay: 0s;"></circle>
+                        <circle class="st3 circle-animate" cx="500" cy="300" r="30" style="--delay: 0.5s;"></circle>
+                        <text x="500" y="305" font-family="Font Awesome 6 Free" font-size="25" fill="white" text-anchor="middle" alignment-baseline="middle">&#xf004;</text> <!-- Heart icon -->
+                    </g>
+
+                    <!-- GIS-like grid/overlay -->
+                    <line class="st0 path-animate" x1="50" y1="50" x2="950" y2="50" style="--delay: 2s;"></line>
+                    <line class="st0 path-animate" x1="50" y1="150" x2="950" y2="150" style="--delay: 2.2s;"></line>
+                    <line class="st0 path-animate" x1="50" y1="250" x2="950" y2="250" style="--delay: 2.4s;"></line>
+                    <line class="st0 path-animate" x1="50" y1="350" x2="950" y2="350" style="--delay: 2.6s;"></line>
+                    <line class="st0 path-animate" x1="50" y1="450" x2="950" y2="450" style="--delay: 2.8s;"></line>
+                    <line class="st0 path-animate" x1="50" y1="550" x2="950" y2="550" style="--delay: 3s;"></line>
+
+                    <line class="st0 path-animate" x1="100" y1="50" x2="100" y2="550" style="--delay: 3.2s;"></line>
+                    <line class="st0 path-animate" x1="200" y1="50" x2="200" y2="550" style="--delay: 3.4s;"></line>
+                    <line class="st0 path-animate" x1="300" y1="50" x2="300" y2="550" style="--delay: 3.6s;"></line>
+                    <line class="st0 path-animate" x1="400" y1="50" x2="400" y2="550" style="--delay: 3.8s;"></line>
+                    <line class="st0 path-animate" x1="500" y1="50" x2="500" y2="550" style="--delay: 4s;"></line>
+                    <line class="st0 path-animate" x1="600" y1="50" x2="600" y2="550" style="--delay: 4.2s;"></line>
+                    <line class="st0 path-animate" x1="700" y1="50" x2="700" y2="550" style="--delay: 4.4s;"></line>
+                    <line class="st0 path-animate" x1="800" y1="50" x2="800" y2="550" style="--delay: 4.6s;"></line>
+                    <line class="st0 path-animate" x1="900" y1="50" x2="900" y2="550" style="--delay: 4.8s;"></line>
+                </svg>
+            </div>
         </section>
 
         <section id="about" class="about-section aos-init" data-aos="zoom-in">
@@ -1419,13 +1703,58 @@
                     Bangladesh, with its vibrant population of over 170 million, faces significant healthcare challenges. Uneven access, limited infrastructure, a shortage of dedicated health professionals, and fragmented data across public and private sectors create a complex landscape. ArovelCare emerges as the essential centralized digital healthcare system designed to address these issues holistically, transforming challenges into opportunities for a healthier nation.
                 </p>
                 <p>
-                    Our mission is to unite 180 million Bangladeshis under a single, comprehensive healthcare system, each with a unique Health ID. We are committed to ensuring that quality care reaches every citizen, from bustling urban centers to the most remote rural villages. ArovelCare empowers healthcare providers with a unified platform for Electronic Health Records (EHRs), virtual consultations, real-time analytics, and more, streamlining workflows and enhancing patient engagement through advanced encryption and AI-driven insights.
+                    Our mission is to unite 180 million Bangladeshis under a single, comprehensive healthcare system, each with a unique Health ID. We are committed to ensuring that quality care reaches every citizen, from bustling urban centers to the most remote rural villages. ArovelCare empowers healthcare providers with a unified platform for Electronic Health Records (EHRs), virtual consultations, real-time analytics, and more, streamlining workflows and enhancing patient engagement through advanced encryption and intelligent insights.
+                </p>
+                <hr class="section-divider">
+            </div>
+
+            <!-- New GIS Integration Section within About -->
+            <div class="about-gis-integration aos-init" data-aos="fade-up">
+                <h3>GIS: Powering Precision Healthcare Delivery</h3>
+                <p>
+                    Geographic Information Systems (GIS) are at the heart of ArovelCare's ability to deliver equitable and efficient healthcare across Bangladesh. By integrating geospatial data, we gain unprecedented insights into health trends, resource distribution, and emergency response needs, from bustling city centers to remote rural communities.
+                </p>
+                <div class="gis-visual-container">
+                    <svg viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice">
+                        <!-- Basic map background (simplified representation of Bangladesh) -->
+                        <rect class="map-bg" x="0" y="0" width="800" height="400"></rect>
+
+                        <!-- City/Urban areas (larger blue dots) -->
+                        <circle class="city-dots" cx="150" cy="100" r="15"></circle>
+                        <circle class="city-dots" cx="650" cy="150" r="18"></circle>
+                        <circle class="city-dots" cx="300" cy="300" r="16"></circle>
+
+                        <!-- Rural areas (smaller green dots) -->
+                        <circle class="rural-dots" cx="50" cy="250" r="8"></circle>
+                        <circle class="rural-dots" cx="250" cy="50" r="9"></circle>
+                        <circle class="rural-dots" cx="400" cy="350" r="7"></circle>
+                        <circle class="rural-dots" cx="750" cy="300" r="10"></circle>
+                        <circle class="rural-dots" cx="100" cy="380" r="8"></circle>
+                        <circle class="rural-dots" cx="550" cy="50" r="9"></circle>
+
+                        <!-- Animated data flow lines -->
+                        <path class="data-flow-path" d="M150,100 L300,300 L650,150 L750,300" style="--delay: 0s;"></path>
+                        <path class="data-flow-path" d="M300,300 L50,250 L400,350 L750,300" style="--delay: 0.5s;"></path>
+
+                        <!-- Alert/Outbreak pulse (example: near a rural area) -->
+                        <circle class="alert-pulse" cx="400" cy="350" r="12"></circle>
+
+                        <!-- Hospital/Clinic icons (Font Awesome Unicode) -->
+                        <text x="150" y="100" class="hospital-icon">&#xf0f8;</text>
+                        <text x="650" y="150" class="hospital-icon">&#xf0f8;</text>
+                        <text x="300" y="300" class="hospital-icon">&#xf0f8;</text>
+
+                        <!-- Ambulance/Emergency response (Font Awesome Unicode) -->
+                        <text x="400" y="350" class="ambulance-icon">&#xf0f9;</text>
+                    </svg>
+                </div>
+                <p>
+                    With GIS, we can visualize disease outbreaks in real-time, pinpoint areas with limited access to care, and strategically deploy mobile health units and emergency services. This intelligent mapping ensures that resources reach the right place at the right time, optimizing logistics for medicine delivery and enabling rapid response during natural disasters or health crises. It’s about making every resource count, precisely where it's needed most.
                 </p>
                 <hr class="section-divider">
             </div>
         </section>
 
-        <!-- Video Section -->
         <section id="video-showcase" class="video-section aos-init" data-aos="fade-up">
             <h2>Witness the Future of Healthcare Facilities</h2>
             <p>
@@ -1441,7 +1770,38 @@
         </section>
         <!-- End Video Section -->
 
-        <!-- Section: Bangladesh's Health Landscape: Key Insights (Infographics) -->
+        <!-- New Section: ArovelCare's Transformative Impact: Our Metrics of Progress -->
+        <section id="transformative-impact" class="transformative-impact-section aos-init" data-aos="fade-up">
+            <h2>ArovelCare's Transformative Impact: Our Metrics of Progress</h2>
+            <p class="subtext">
+                Our vision for a healthier Bangladesh is driven by tangible goals and smart implementation. Through advanced technology and a deep understanding of local needs, we are actively shaping a future where quality healthcare is a reality for all.
+            </p>
+            <div class="impact-metrics-grid">
+                <div class="impact-metric-card aos-init" data-aos="zoom-in">
+                    <i class="fas fa-users icon"></i>
+                    <h3>170 Million+</h3>
+                    <p>Lives Transformed: Our ambition to touch every life in Bangladesh with accessible, quality healthcare.</p>
+                </div>
+                <div class="impact-metric-card aos-init" data-aos="zoom-in" data-aos-delay="100">
+                    <i class="fas fa-id-card icon"></i>
+                    <h3>95%+ Coverage</h3>
+                    <p>National Health ID Reach: Ensuring every citizen has a unified digital health identity for seamless care.</p>
+                </div>
+                <div class="impact-metric-card aos-init" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-map-marked-alt icon"></i>
+                    <h3>GIS-Powered Precision</h3>
+                    <p>Optimized Resource Allocation: Leveraging geospatial insights for real-time deployment and emergency response across Bangladesh.</p>
+                </div>
+                <div class="impact-metric-card aos-init" data-aos="zoom-in" data-aos-delay="300">
+                    <i class="fas fa-chart-line icon"></i>
+                    <h3>25%+ Annual ROI</h3>
+                    <p>Sustainable Growth: Driving efficiency and value, ensuring a robust model for continuous healthcare innovation.</p>
+                </div>
+            </div>
+            <hr class="section-divider">
+        </section>
+        <!-- End New Section: ArovelCare's Transformative Impact -->
+
         <section id="health-landscape" class="health-landscape-section aos-init" data-aos="fade-up">
             <h2>Bangladesh's Health Landscape: Key Insights</h2>
             <p class="subtext">Understanding the challenges that drive our mission for a healthier nation.</p>
@@ -1488,23 +1848,23 @@
                     <p>Connect rural patients with urban specialists via secure video consultations, lowering travel costs and bridging the specialist gap in underserved regions.</p>
                 </div>
                 <div class="feature-card aos-init" data-aos="flip-left">
-                    <h3>Real-Time Disease Surveillance</h3>
-                    <p>Monitor outbreaks like dengue or cholera using AI-powered analytics, enabling rapid containment and efficient resource allocation during epidemics.</p>
+                    <h3>Real-Time Disease Surveillance & Outbreak Monitoring</h3>
+                    <p>Harnessing **Advanced Predictive Analytics** to monitor disease patterns, identify potential outbreaks, and enable rapid, targeted interventions across all regions.</p>
                 <i class="fas fa-chart-line" style="font-size: 2em; color: var(--arovel-blue); margin-top: 15px;"></i>
                 </div>
                 <div class="feature-card aos-init" data-aos="flip-right">
-                    <h3>Digital Immunization Tracking</h3>
-                    <p>Track vaccinations via mobile apps with automated SMS reminders for parents, significantly boosting immunization coverage and reducing preventable diseases.</p>
+                    <h3>Digital Immunization Tracking & Research</h3>
+                    <p>Streamline vaccination records via mobile apps with automated reminders. Data supports vital **Public Health Research** for effective disease prevention strategies.</p>
                 <i class="fas fa-syringe" style="font-size: 2em; color: var(--arovel-blue); margin-top: 15px;"></i>
                 </div>
                 <div class="feature-card aos-init" data-aos="flip-left">
-                    <h3>Smart Supply Chain Management</h3>
-                    <p>Track medicine and vaccine stocks via IoT sensors to prevent shortages, reduce waste, and ensure timely delivery to even the most remote facilities.</p>
+                    <h3>Smart Supply Chain Management & Logistics</h3>
+                    <p>Track medicine and vaccine stocks with IoT sensors for **Optimized Logistics**, preventing shortages and ensuring timely, efficient delivery to every facility.</p>
                 <i class="fas fa-truck-medical" style="font-size: 2em; color: var(--arovel-blue); margin-top: 15px;"></i>
                 </div>
                 <div class="feature-card aos-init" data-aos="flip-right">
-                    <h3>AI-Powered Insights & Recommendations</h3>
-                    <p>Leverage intelligent care suggestions based on patient history and patterns, improving diagnoses, predicting outbreaks, and optimizing resource allocation.</p>
+                    <h3>Intelligent Insights & Personalized Recommendations</h3>
+                    <p>Leverage **Advanced Predictive Analytics** to offer intelligent care suggestions based on patient history, improving diagnoses and optimizing treatment plans.</p>
                 <i class="fas fa-brain" style="font-size: 2em; color: var(--arovel-blue); margin-top: 15px;"></i>
                 </div>
                 <div class="feature-card aos-init" data-aos="flip-left">
@@ -1513,8 +1873,8 @@
                 <i class="fas fa-language" style="font-size: 2em; color: var(--arovel-blue); margin-top: 15px;"></i>
                 </div>
                 <div class="feature-card aos-init" data-aos="flip-right">
-                    <h3>Fraud Detection & Compliance Tools</h3>
-                    <p>Implement robust systems to prevent medical fraud, ensure tax compliance, and provide audit trails, saving public funds and improving trust.</p>
+                    <h3>Fraud Detection & Regulatory Compliance</h3>
+                    <p>Implement robust systems to prevent medical fraud, ensure **Regulatory Compliance**, and provide audit trails, saving public funds and improving trust.</p>
                 <i class="fas fa-shield-alt" style="font-size: 2em; color: var(--arovel-blue); margin-top: 15px;"></i>
                 </div>
             </div>
